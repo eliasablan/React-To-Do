@@ -5,7 +5,9 @@ function App() {
 
   return (
     <>
-      <CreateTodoButton />
+      <div className="text-center">
+        <CreateTodoButton />
+      </div>
       <CreateTodoSlide />
     </>
   );
