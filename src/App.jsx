@@ -5,6 +5,28 @@ import { TodoItem } from './components/TodoItem';
 import { TodoSearch } from './components/TodoSearch';
 import { TodoCounter } from './components/TodoCounter';
 
+const useLocalStorage = (itemName, initialValue) => {
+  const localStorageItem = localStorage.getItem(itemName);
+
+  let parsedItem;
+
+  if (!localStorageItem) {
+    localStorage.setItem(itemName, JSON.stringify(initialValue));
+    parsedItem = initialValue;
+  } else {
+    parsedItem = JSON.parse(localStorageItem);
+  }
+  const [item, setItem] = useState(parsedItem);
+
+  const saveItem = (newItem) => {
+    console.log(newItem);
+    localStorage.setItem(itemName, JSON.stringify(newItem));
+    setItem(newItem);
+  };
+
+  return [item, saveItem];
+};
+
 const getTodos = async () => {
   try {
     const url = 'http://127.0.0.1:8000/api/todos/';
@@ -25,8 +47,8 @@ const getTodos = async () => {
 };
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [searchValue, setSearchValue] = useState('');
+  const [todos, setTodos] = useLocalStorage('TODOS-V1', []);
+  const [searchValue, setSearchValue] = useLocalStorage('SEARCH-V1', '');
   const [isLoading, setIsLoading] = useState(true);
 
   const totalTodos = todos.length;
