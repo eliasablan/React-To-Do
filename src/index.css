@@ -38,3 +38,7 @@ button {
 .dialog-background {
   background-color: #fffd82;
 }
+
+li > p:hover {
+  background-color: #ed217c;
+}
