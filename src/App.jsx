@@ -48,7 +48,7 @@ const getTodos = async () => {
 
 const useTodos = (initialValue) => {
   const [todos, setTodos] = useState(initialValue);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isFinished = async (todoId, value) => {
     try {
@@ -75,6 +75,7 @@ const useTodos = (initialValue) => {
 
       const data = await response.json();
       console.log('isFinished todo data', data);
+      setIsLoading(false);
       return data;
     } catch (error) {
       console.log('isFinished error', error);
@@ -82,13 +83,49 @@ const useTodos = (initialValue) => {
     }
   };
 
-  const completeTodo = async (todoId) => isFinished(todoId, true);
-  const uncompleteTodo = async (todoId) => isFinished(todoId, false);
+  const completeTodo = (todoId) => isFinished(todoId, true);
+
+  const uncompleteTodo = (todoId) => isFinished(todoId, false);
+
+  const deleteTodo = async (todoId) => {
+    try {
+      setIsLoading(true);
+      const url = `http://127.0.0.1:8000/api/todos/${todoId}`;
+      const accesKey =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2Mzk5NzU1LCJpYXQiOjE2OTU3MTE1NDQsImp0aSI6ImZlODZjOGYzZTI0MTQ1Zjc4MDFhN2M1N2JiYTJjMTc5IiwidXNlcl9pZCI6MX0.YHpZcNs_powC4edo1QNzcMu6lOLQxL3Z5uxaFlfl2Qc';
+      const options = {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${accesKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ deleted: true }),
+      };
+      const response = await fetch(url, options);
+
+      if (response.status !== 200) {
+        throw {
+          status: response.status,
+          message: response.statusText,
+        };
+      }
+
+      const data = await response.json();
+      console.log('deleteTodo todo data', data);
+      setIsLoading(false);
+      return data;
+    } catch (error) {
+      console.log('deleteTodo error', error);
+      return error;
+    }
+  };
+
   return [
     todos,
     setTodos,
     completeTodo,
     uncompleteTodo,
+    deleteTodo,
     isLoading,
     setIsLoading,
   ];
@@ -100,25 +137,30 @@ function App() {
     setTodos,
     completeTodo,
     uncompleteTodo,
+    deleteTodo,
     isLoading,
     setIsLoading,
   ] = useTodos([]);
   const [searchValue, setSearchValue] = useLocalStorage('SEARCH-V1', '');
 
-  const totalTodos = todos.length;
-  const completedTodos = todos.filter((todo) => !!todo.finished).length;
-
   const searchedTodos = todos.filter((todo) => {
     const todoText = todo.todo.toLowerCase();
     const searchText = searchValue.toLowerCase();
-    return todoText.includes(searchText);
+    return !todo.deleted && todoText.includes(searchText);
   });
 
+  const totalTodos = searchedTodos.length;
+  const completedTodos = searchedTodos.filter(
+    (todo) => !!todo.finished,
+  ).length;
+
   useEffect(() => {
-    getTodos()
-      .then((response) => setTodos(response))
-      .then(() => setIsLoading(false));
-  }, [todos]);
+    if (!isLoading) {
+      getTodos()
+        .then((response) => setTodos(response))
+        .then(() => setIsLoading(false));
+    }
+  }, [setTodos, setIsLoading, isLoading]);
 
   return isLoading ? (
     <h1>Loading...</h1>
@@ -137,6 +179,7 @@ function App() {
             key={todo.id}
             onComplete={() => completeTodo(todo.id)}
             onIncomplete={() => uncompleteTodo(todo.id)}
+            onRemove={() => deleteTodo(todo.id)}
           />
         ))}
       </TodoList>
