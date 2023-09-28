@@ -16,29 +16,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-input {
-  background-color: #ff9b71;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #fffd82;
-  padding: 3px;
-}
-input::placeholder {
-  color: #2d3047;
-}
-
-p {
-  color: #2d3047;
-}
-button {
-  background-color: #fffd82;
-}
-
-.dialog-background {
-  background-color: #fffd82;
-}
-
-li > p:hover {
-  background-color: #ed217c;
-}

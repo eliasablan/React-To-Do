@@ -6,7 +6,7 @@ function CreateTodoButton() {
 
   return (
     <button
-      className="rounded-md mt-4 px-3 py-1"
+      className="bg-ic border-2 border-at hover:bg-at hover:border-ic text-sc mt-4 px-3 py-2 rounded-md"
       onClick={() => dispatch(toggleModalStatus())}
     >
       Create a Todo

@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 function TodoItem({ todo, onComplete, onIncomplete, onRemove }) {
   return (
     <li>
-      <p>
+      <p className="text-sc hover:bg-at">
         <span
           className="cursor-default"
           onClick={todo.finished ? onIncomplete : onComplete}

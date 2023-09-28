@@ -51,7 +51,7 @@ function CreateTodoSlide() {
                     leaveTo="opacity-0"
                   >
                     <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
-                      <button
+                      {/* <button
                         type="button"
                         className="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
                         onClick={() => dispatch(toggleModalStatus())}
@@ -62,13 +62,28 @@ function CreateTodoSlide() {
                           className="h-6 w-6"
                           aria-hidden="true"
                         />
-                      </button>
+                      </button> */}
                     </div>
                   </Transition.Child>
-                  <div className="dialog-background flex h-full flex-col overflow-y-scroll py-6 shadow-xl shadow-black">
-                    <div className="px-4 sm:px-6">
-                      <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                        Panel title
+                  <div className="bg-ic flex h-full flex-col overflow-y-scroll py-6 shadow-xl shadow-black">
+                    <div>
+                      <Dialog.Title
+                        // onClick={() => dispatch(toggleModalStatus())}
+                        className="text-base font-semibold leading-6 text-gray-900"
+                      >
+                        <button
+                          type="button"
+                          className="relative rounded-md px-4 text-gray-600 border-gray-600 hover:text-gray-500"
+                          onClick={() => dispatch(toggleModalStatus())}
+                        >
+                          {/* <span className="absolute -inset-2.5" /> */}
+                          <span className="sr-only">Close panel</span>
+                          <XMarkIcon
+                            className="inline mb-1 mr-1 h-7 w-7"
+                            aria-hidden="true"
+                          />
+                          Close tab
+                        </button>
                       </Dialog.Title>
                     </div>
                     <div className="relative mt-6 flex-1 px-4 sm:px-6">
