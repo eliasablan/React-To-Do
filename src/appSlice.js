@@ -10,10 +10,11 @@ export const appSlice = createSlice({
   reducers: {
     toggleModalStatus: (state) => {
       state.modalIsOpen = !state.modalIsOpen;
-    },
+    }
   },
 });
 
-export const { toggleModalStatus } = appSlice.actions;
+export const { toggleModalStatus } =
+  appSlice.actions;
 
 export default appSlice.reducer;

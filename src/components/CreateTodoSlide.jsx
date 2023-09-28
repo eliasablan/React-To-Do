@@ -65,7 +65,7 @@ function CreateTodoSlide() {
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                  <div className="dialog-background flex h-full flex-col overflow-y-scroll py-6 shadow-xl shadow-black">
                     <div className="px-4 sm:px-6">
                       <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
                         Panel title

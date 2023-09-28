@@ -1,7 +1,6 @@
-
 function TodoSearch() {
   return (
-    <input placeholder="Cortar cebolla" />
+    <input className="mb-4 rounded-md" placeholder="Cortar cebolla" />
   );
 }
 
