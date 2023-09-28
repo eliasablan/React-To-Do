@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import './index.css';
 
 import { CreateTodoButton } from '../components/CreateTodoButton';
 import { TodoList } from '../components/TodoList';
