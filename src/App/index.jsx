@@ -1,14 +1,9 @@
 import { useEffect } from 'react';
 
-import { CreateTodoButton } from '../components/CreateTodoButton';
-import { TodoList } from '../components/TodoList';
-import { TodoItem } from '../components/TodoItem';
-import { TodoSearch } from '../components/TodoSearch';
-import { TodoCounter } from '../components/TodoCounter';
-
 import { useLocalStorage } from '../useLocalStorage';
 import { getTodos } from '../utils';
 import { useTodos } from '../useTodos';
+import AppUI from './AppUI';
 
 function App() {
   const [
@@ -42,32 +37,17 @@ function App() {
   }, [setTodos, setIsLoading, isLoading]);
 
   return (
-    <div className="m-14 text-center">
-      {isLoading ? (
-        <h1>Loading...</h1>
-      ) : (
-        <div className="m-14 text-center">
-          <TodoCounter total={totalTodos} completed={completedTodos} />
-          <TodoSearch
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-          />
-
-          <TodoList>
-            {searchedTodos.map((todo) => (
-              <TodoItem
-                todo={todo}
-                key={todo.id}
-                onComplete={() => completeTodo(todo.id)}
-                onIncomplete={() => uncompleteTodo(todo.id)}
-                onRemove={() => deleteTodo(todo.id)}
-              />
-            ))}
-          </TodoList>
-          <CreateTodoButton />
-        </div>
-      )}
-    </div>
+    <AppUI
+      isLoading={isLoading}
+      searchedTodos={searchedTodos}
+      totalTodos={totalTodos}
+      completedTodos={completedTodos}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+      completeTodo={completeTodo}
+      uncompleteTodo={uncompleteTodo}
+      deleteTodo={deleteTodo}
+    />
   );
 }
 
