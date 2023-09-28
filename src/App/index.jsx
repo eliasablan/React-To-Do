@@ -42,6 +42,7 @@ function App() {
     }
   }, [setTodos, setIsLoading, isLoading]);
 
+<<<<<<< HEAD
   return (
     <div className="m-14 text-center">
       {isLoading ? (
@@ -69,6 +70,31 @@ function App() {
         </div>
       )}
     </div>
+=======
+  return isLoading ? (
+    <h1>Loading...</h1>
+  ) : (
+    <>
+      <TodoCounter total={totalTodos} completed={completedTodos} />
+      <TodoSearch
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+      />
+
+      <TodoList>
+        {searchedTodos.map((todo) => (
+          <TodoItem
+            todo={todo}
+            key={todo.id}
+            onComplete={() => completeTodo(todo.id)}
+            onIncomplete={() => uncompleteTodo(todo.id)}
+            onRemove={() => deleteTodo(todo.id)}
+          />
+        ))}
+      </TodoList>
+      <CreateTodoButton />
+    </>
+>>>>>>> origin/main
   );
 }
 
