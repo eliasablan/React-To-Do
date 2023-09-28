@@ -1,11 +1,12 @@
 import { PropTypes } from 'prop-types';
-import '../assets/styles/TodoCounter.css';
 
 function TodoCounter({ total, completed }) {
   return (
-    <h1>
-      Has completado {completed} de {total} TODOS
-    </h1>
+    <>
+      <h1 className="p-12 text-lg">
+        Has completado {completed} de {total} TODOS
+      </h1>
+    </>
   );
 }
 
