@@ -46,10 +46,64 @@ const getTodos = async () => {
   }
 };
 
-function App() {
-  const [todos, setTodos] = useLocalStorage('TODOS-V1', []);
-  const [searchValue, setSearchValue] = useLocalStorage('SEARCH-V1', '');
+const useTodos = (initialValue) => {
+  const [todos, setTodos] = useState(initialValue);
   const [isLoading, setIsLoading] = useState(true);
+
+  const isFinished = async (todoId, value) => {
+    try {
+      setIsLoading(true);
+      const url = `http://127.0.0.1:8000/api/todos/${todoId}`;
+      const accesKey =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2Mzk5NzU1LCJpYXQiOjE2OTU3MTE1NDQsImp0aSI6ImZlODZjOGYzZTI0MTQ1Zjc4MDFhN2M1N2JiYTJjMTc5IiwidXNlcl9pZCI6MX0.YHpZcNs_powC4edo1QNzcMu6lOLQxL3Z5uxaFlfl2Qc';
+      const options = {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${accesKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ finished: value }),
+      };
+      const response = await fetch(url, options);
+
+      if (response.status !== 200) {
+        throw {
+          status: response.status,
+          message: response.statusText,
+        };
+      }
+
+      const data = await response.json();
+      console.log('isFinished todo data', data);
+      return data;
+    } catch (error) {
+      console.log('isFinished error', error);
+      return error;
+    }
+  };
+
+  const completeTodo = async (todoId) => isFinished(todoId, true);
+  const uncompleteTodo = async (todoId) => isFinished(todoId, false);
+  return [
+    todos,
+    setTodos,
+    completeTodo,
+    uncompleteTodo,
+    isLoading,
+    setIsLoading,
+  ];
+};
+
+function App() {
+  const [
+    todos,
+    setTodos,
+    completeTodo,
+    uncompleteTodo,
+    isLoading,
+    setIsLoading,
+  ] = useTodos([]);
+  const [searchValue, setSearchValue] = useLocalStorage('SEARCH-V1', '');
 
   const totalTodos = todos.length;
   const completedTodos = todos.filter((todo) => !!todo.finished).length;
@@ -60,65 +114,11 @@ function App() {
     return todoText.includes(searchText);
   });
 
-  const completeTodo = async (todoId) => {
-    try {
-      setIsLoading(true);
-      const url = `http://127.0.0.1:8000/api/todos/${todoId}`;
-      const accesKey =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2Mzk5NzU1LCJpYXQiOjE2OTU3MTE1NDQsImp0aSI6ImZlODZjOGYzZTI0MTQ1Zjc4MDFhN2M1N2JiYTJjMTc5IiwidXNlcl9pZCI6MX0.YHpZcNs_powC4edo1QNzcMu6lOLQxL3Z5uxaFlfl2Qc';
-
-      const options = {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${accesKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ finished: true }),
-      };
-      const response = await fetch(url, options);
-      const data = await response.json();
-      getTodos()
-        .then((response) => setTodos(response))
-        .then(() => setIsLoading(false));
-      return data;
-    } catch (error) {
-      console.log('completeTodo error', error);
-      return error;
-    }
-  };
-
-  const uncompleteTodo = async (todoId) => {
-    try {
-      setIsLoading(true);
-      const url = `http://127.0.0.1:8000/api/todos/${todoId}`;
-      const accesKey =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2Mzk5NzU1LCJpYXQiOjE2OTU3MTE1NDQsImp0aSI6ImZlODZjOGYzZTI0MTQ1Zjc4MDFhN2M1N2JiYTJjMTc5IiwidXNlcl9pZCI6MX0.YHpZcNs_powC4edo1QNzcMu6lOLQxL3Z5uxaFlfl2Qc';
-
-      const options = {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${accesKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ finished: false }),
-      };
-      const response = await fetch(url, options);
-      const data = await response.json();
-      getTodos()
-        .then((response) => setTodos(response))
-        .then(() => setIsLoading(false));
-      return data;
-    } catch (error) {
-      console.log('completeTodo error', error);
-      return error;
-    }
-  };
-
   useEffect(() => {
     getTodos()
       .then((response) => setTodos(response))
       .then(() => setIsLoading(false));
-  }, []);
+  }, [todos]);
 
   return isLoading ? (
     <h1>Loading...</h1>
