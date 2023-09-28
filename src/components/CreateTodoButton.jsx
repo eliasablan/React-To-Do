@@ -6,10 +6,10 @@ function CreateTodoButton() {
 
   return (
     <button
-      className="bg-ic border-2 border-at hover:bg-at hover:border-ic text-sc mt-4 px-3 py-2 rounded-md"
+      className="bg-ic border-2 border-at hover:bg-at hover:border-ic font-semibold text-sc mt-5 px-3 py-1 rounded-lg"
       onClick={() => dispatch(toggleModalStatus())}
     >
-      Create a Todo
+      Crea un TO-DO
     </button>
   );
 }
