@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { CreateTodoButton } from './components/CreateTodoButton';
 import { CreateTodoSlide } from './components/CreateTodoSlide';
+import { TodoList } from './components/TodoList';
+import { TodoItem } from './components/TodoItem';
 import { TodoSearch } from './components/TodoSearch';
+import { TodoCounter } from './components/TodoCounter';
 
 const getTodos = async () => {
   try {
@@ -24,6 +27,10 @@ const getTodos = async () => {
 
 function App() {
   const [todos, setTodos] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
+
+  const totalTodos = todos.length;
+  const completedTodos = todos.filter((todo) => !!todo.finished).length;
 
   useEffect(() => {
     getTodos().then((response) => setTodos(response));
@@ -32,12 +39,17 @@ function App() {
   return (
     <>
       <div className="m-14 text-center">
-        <TodoSearch />
-        {todos.map((todo) => (
-          <p className="my-1" key={todo.id}>
-            {todo.todo}
-          </p>
-        ))}
+        <TodoCounter total={totalTodos} completed={completedTodos} />
+        <TodoSearch
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+        />
+
+        <TodoList>
+          {todos.map((todo) => (
+            <TodoItem todo={todo} key={todo.id} />
+          ))}
+        </TodoList>
         <CreateTodoButton />
       </div>
       <CreateTodoSlide />

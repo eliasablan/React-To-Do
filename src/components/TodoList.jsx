@@ -1,11 +1,11 @@
+import { PropTypes } from 'prop-types';
 
 function TodoList({ children }) {
-  return (
-    <ul>
-      {children}
-    </ul>
-  );
+  return <ul>{children}</ul>;
 }
 
-export { TodoList };
+TodoList.propTypes = {
+  children: PropTypes.any,
+};
 
+export { TodoList };

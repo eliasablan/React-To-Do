@@ -8,9 +8,10 @@ function TodoCounter({ total, completed }) {
     </h1>
   );
 }
+
 TodoCounter.propTypes = {
-  total: PropTypes.string.isRequired,
-  completed: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
+  completed: PropTypes.number.isRequired,
 };
 
 export { TodoCounter };

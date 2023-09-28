@@ -1,12 +1,14 @@
+import { PropTypes } from 'prop-types';
 
-function TodoItem(props) {
+function TodoItem({ todo }) {
   return (
     <li>
-      <span>V</span>
-      <p>{props.text}</p>
-      <span>X</span>
+      <p className={todo.finished ? 'line-through' : null}>{todo.todo}</p>
     </li>
   );
 }
+TodoItem.propTypes = {
+  todo: PropTypes.object.isRequired,
+};
 
 export { TodoItem };
