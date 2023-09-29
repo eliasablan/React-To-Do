@@ -12,8 +12,8 @@ function App() {
     completeTodo,
     uncompleteTodo,
     deleteTodo,
-    isLoading,
-    setIsLoading,
+    todosLoading,
+    setTodosLoading,
   ] = useTodos([]);
   const [searchValue, setSearchValue] = useLocalStorage('SEARCH-V1', '');
 
@@ -29,16 +29,16 @@ function App() {
   ).length;
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!todosLoading) {
       getTodos()
         .then((response) => setTodos(response))
-        .then(() => setIsLoading(false));
+        .then(() => setTodosLoading(false));
     }
-  }, [setTodos, setIsLoading, isLoading]);
+  }, [setTodos, setTodosLoading, todosLoading]);
 
   return (
     <AppUI
-      isLoading={isLoading}
+      todosLoading={todosLoading}
       searchedTodos={searchedTodos}
       totalTodos={totalTodos}
       completedTodos={completedTodos}

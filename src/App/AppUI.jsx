@@ -6,7 +6,7 @@ import { TodoSearch } from '../components/TodoSearch';
 import { TodoCounter } from '../components/TodoCounter';
 
 const AppUI = ({
-  isLoading,
+  todosLoading,
   searchedTodos,
   totalTodos,
   completedTodos,
@@ -16,10 +16,9 @@ const AppUI = ({
   uncompleteTodo,
   deleteTodo,
 }) => {
-  console.log('isLoading', isLoading);
   return (
     <div className="m-14 text-center">
-      {isLoading ? (
+      {todosLoading ? (
         <h1>Loading...</h1>
       ) : (
         <div className="m-14 text-center">
@@ -48,7 +47,7 @@ const AppUI = ({
 };
 
 AppUI.propTypes = {
-  isLoading: PropTypes.any,
+  todosLoading: PropTypes.any,
   totalTodos: PropTypes.any,
   completedTodos: PropTypes.any,
   searchValue: PropTypes.any,

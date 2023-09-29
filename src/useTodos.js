@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export const useTodos = (initialValue) => {
   const [todos, setTodos] = useState(initialValue);
-  const [isLoading, setIsLoading] = useState(false);
+  const [todosLoading, setTodosLoading] = useState(false);
 
   const isFinished = async (todoId, value) => {
     try {
-      setIsLoading(true);
+      setTodosLoading(true);
       const url = `http://127.0.0.1:8000/api/todos/${todoId}`;
       const accesKey =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2Mzk5NzU1LCJpYXQiOjE2OTU3MTE1NDQsImp0aSI6ImZlODZjOGYzZTI0MTQ1Zjc4MDFhN2M1N2JiYTJjMTc5IiwidXNlcl9pZCI6MX0.YHpZcNs_powC4edo1QNzcMu6lOLQxL3Z5uxaFlfl2Qc';
@@ -28,8 +28,8 @@ export const useTodos = (initialValue) => {
       }
 
       const data = await response.json();
-      console.log('isFinished todo data', data);
-      setIsLoading(false);
+      console.log('modified todo new data', data);
+      setTodosLoading(false);
       return data;
     } catch (error) {
       console.log('isFinished error', error);
@@ -43,7 +43,7 @@ export const useTodos = (initialValue) => {
 
   const deleteTodo = async (todoId) => {
     try {
-      setIsLoading(true);
+      setTodosLoading(true);
       const url = `http://127.0.0.1:8000/api/todos/${todoId}`;
       const accesKey =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2Mzk5NzU1LCJpYXQiOjE2OTU3MTE1NDQsImp0aSI6ImZlODZjOGYzZTI0MTQ1Zjc4MDFhN2M1N2JiYTJjMTc5IiwidXNlcl9pZCI6MX0.YHpZcNs_powC4edo1QNzcMu6lOLQxL3Z5uxaFlfl2Qc';
@@ -66,7 +66,7 @@ export const useTodos = (initialValue) => {
 
       const data = await response.json();
       console.log('deleteTodo todo data', data);
-      setIsLoading(false);
+      setTodosLoading(false);
       return data;
     } catch (error) {
       console.log('deleteTodo error', error);
@@ -80,7 +80,7 @@ export const useTodos = (initialValue) => {
     completeTodo,
     uncompleteTodo,
     deleteTodo,
-    isLoading,
-    setIsLoading,
+    todosLoading,
+    setTodosLoading,
   ];
 };
