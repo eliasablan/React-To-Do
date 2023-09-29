@@ -4,6 +4,7 @@ import { TodoList } from '../components/TodoList';
 import { TodoItem } from '../components/TodoItem';
 import { TodoSearch } from '../components/TodoSearch';
 import { TodoCounter } from '../components/TodoCounter';
+import { TodosLoading } from '../components/TodosLoading';
 
 const AppUI = ({
   todosLoading,
@@ -18,8 +19,9 @@ const AppUI = ({
 }) => {
   return (
     <div className="m-14 text-center">
+      {/* <TodosLoading /> */}
       {todosLoading ? (
-        <h1>Loading...</h1>
+        <TodosLoading />
       ) : (
         <div className="m-14 text-center">
           <TodoCounter total={totalTodos} completed={completedTodos} />
