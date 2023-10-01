@@ -1,8 +1,7 @@
 export const getTodos = async () => {
   try {
-    const url = 'http://127.0.0.1:8000/api/todos/';
-    const accesKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk2Mzk5NzU1LCJpYXQiOjE2OTU3MTE1NDQsImp0aSI6ImZlODZjOGYzZTI0MTQ1Zjc4MDFhN2M1N2JiYTJjMTc5IiwidXNlcl9pZCI6MX0.YHpZcNs_powC4edo1QNzcMu6lOLQxL3Z5uxaFlfl2Qc';
+    const url = new URL(import.meta.env.VITE_LOCAL_DJANGO_URL);
+    const accesKey = import.meta.env.VITE_ACCESS_KEY;
     const options = {
       headers: {
         Authorization: `Bearer ${accesKey}`,
