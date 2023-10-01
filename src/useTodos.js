@@ -15,6 +15,7 @@ export const useTodos = (initialValue) => {
         headers: {
           Authorization: `Bearer ${accesKey}`,
           'Content-Type': 'application/json',
+          Origin: '*',
         },
         body: JSON.stringify({ finished: value }),
       };
@@ -49,6 +50,7 @@ export const useTodos = (initialValue) => {
         headers: {
           Authorization: `Bearer ${accesKey}`,
           'Content-Type': 'application/json',
+          Origin: '*',
         },
         body: JSON.stringify({ deleted: true }),
       };

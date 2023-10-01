@@ -5,6 +5,7 @@ export const getTodos = async () => {
     const options = {
       headers: {
         Authorization: `Bearer ${accesKey}`,
+        Origin: '*',
       },
     };
     const response = await fetch(url, options);
