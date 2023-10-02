@@ -14,8 +14,10 @@ export const useTodos = (initialValue) => {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${accesKey}`,
-          'Content-Type': 'application/json',
           Origin: '*',
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'User-Agent': 'My Client',
         },
         body: JSON.stringify({ finished: value }),
       };
@@ -49,8 +51,10 @@ export const useTodos = (initialValue) => {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${accesKey}`,
-          'Content-Type': 'application/json',
           Origin: '*',
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'User-Agent': 'My Client',
         },
         body: JSON.stringify({ deleted: true }),
       };
