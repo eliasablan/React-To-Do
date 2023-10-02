@@ -17,7 +17,6 @@ export const useTodos = (initialValue) => {
           Origin: '*',
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          'User-Agent': 'My Client',
         },
         body: JSON.stringify({ finished: value }),
       };
@@ -54,7 +53,6 @@ export const useTodos = (initialValue) => {
           Origin: '*',
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          'User-Agent': 'My Client',
         },
         body: JSON.stringify({ deleted: true }),
       };
