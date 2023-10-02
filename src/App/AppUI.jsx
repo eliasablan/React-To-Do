@@ -1,4 +1,5 @@
-import { PropTypes } from 'prop-types';
+import { useContext, useEffect } from 'react';
+
 import { CreateTodoButton } from '../components/CreateTodoButton';
 import { TodoList } from '../components/TodoList';
 import { TodoItem } from '../components/TodoItem';
@@ -6,58 +7,46 @@ import { TodoSearch } from '../components/TodoSearch';
 import { TodoCounter } from '../components/TodoCounter';
 import { TodosLoading } from '../components/TodosLoading';
 
-const AppUI = ({
-  todosLoading,
-  searchedTodos,
-  totalTodos,
-  completedTodos,
-  searchValue,
-  setSearchValue,
-  completeTodo,
-  uncompleteTodo,
-  deleteTodo,
-}) => {
+import { TodoContext } from '../TodoContext';
+
+const AppUI = () => {
+  const {
+    getTodos,
+    isLoading,
+    searchedTodos,
+    completeTodo,
+    uncompleteTodo,
+    deleteTodo,
+  } = useContext(TodoContext);
+
+  useEffect(() => {
+    getTodos();
+  }, []);
+
   return (
     <div className="m-14 text-center">
-      {/* <TodosLoading /> */}
-      {todosLoading ? (
-        <TodosLoading />
-      ) : (
-        <div className="m-14 text-center">
-          <TodoCounter total={totalTodos} completed={completedTodos} />
-          <TodoSearch
-            searchValue={searchValue}
-            setSearchValue={setSearchValue}
-          />
-
+      <div className="m-14 text-center">
+        <TodoCounter />
+        <TodoSearch />
+        {isLoading ? (
+          <TodosLoading />
+        ) : (
           <TodoList>
             {searchedTodos.map((todo) => (
               <TodoItem
-                todo={todo}
                 key={todo.id}
+                todo={todo}
                 onComplete={() => completeTodo(todo.id)}
                 onIncomplete={() => uncompleteTodo(todo.id)}
                 onRemove={() => deleteTodo(todo.id)}
               />
             ))}
           </TodoList>
-          <CreateTodoButton />
-        </div>
-      )}
+        )}
+        <CreateTodoButton />
+      </div>
     </div>
   );
-};
-
-AppUI.propTypes = {
-  todosLoading: PropTypes.any,
-  totalTodos: PropTypes.any,
-  completedTodos: PropTypes.any,
-  searchValue: PropTypes.any,
-  setSearchValue: PropTypes.any,
-  searchedTodos: PropTypes.any,
-  completeTodo: PropTypes.any,
-  uncompleteTodo: PropTypes.any,
-  deleteTodo: PropTypes.any,
 };
 
 export default AppUI;

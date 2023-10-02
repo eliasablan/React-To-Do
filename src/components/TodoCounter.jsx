@@ -1,18 +1,15 @@
-import { PropTypes } from 'prop-types';
+import { useContext } from 'react';
+import { TodoContext } from '../TodoContext';
 
-function TodoCounter({ total, completed }) {
+function TodoCounter() {
+  const { totalTodos, completedTodos } = useContext(TodoContext);
   return (
     <>
       <h1 className="p-12 text-lg text-sc font-semibold">
-        Has completado {completed} de {total} TO-DOs
+        Has completado {completedTodos} de {totalTodos} TO-DOs
       </h1>
     </>
   );
 }
-
-TodoCounter.propTypes = {
-  total: PropTypes.number.isRequired,
-  completed: PropTypes.number.isRequired,
-};
 
 export { TodoCounter };

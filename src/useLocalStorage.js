@@ -14,7 +14,6 @@ export const useLocalStorage = (itemName, initialValue) => {
   const [item, setItem] = useState(parsedItem);
 
   const saveItem = (newItem) => {
-    console.log(newItem);
     localStorage.setItem(itemName, JSON.stringify(newItem));
     setItem(newItem);
   };
