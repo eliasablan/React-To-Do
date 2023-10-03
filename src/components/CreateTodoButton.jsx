@@ -1,8 +1,11 @@
 import { PropTypes } from 'prop-types';
 
-const CreateTodoButton = ({ onOpen }) => {
+const CreateTodoButton = ({ isLoading, onOpen }) => {
+  console.log('isLoading');
+  console.log(isLoading);
   return (
     <button
+      disabled={isLoading}
       className="bg-pg border-4 border-ic p-2 hover:bg-ic font-semibold text-at mt-4 rounded-md"
       onClick={onOpen}
     >
@@ -12,5 +15,6 @@ const CreateTodoButton = ({ onOpen }) => {
 };
 CreateTodoButton.propTypes = {
   onOpen: PropTypes.any,
+  isLoading: PropTypes.any,
 };
 export { CreateTodoButton };

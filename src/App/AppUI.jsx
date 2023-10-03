@@ -45,7 +45,10 @@ const AppUI = () => {
             ))}
           </TodoList>
         )}
-        <CreateTodoButton onOpen={() => setOpenModal(true)} />
+        <CreateTodoButton
+          isLoading={isLoading}
+          onOpen={() => setOpenModal(true)}
+        />
         {openModal &&
           createPortal(
             <CreateTodoSlide
