@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 const CreateTodoButton = ({ onOpen }) => {
   return (
     <button
-      className="bg-ic border-2 border-at hover:bg-at hover:border-ic font-semibold text-sc mt-5 px-3 py-1 rounded-lg"
+      className="bg-pg border-4 border-ic p-2 hover:bg-ic font-semibold text-at mt-4 rounded-md"
       onClick={onOpen}
     >
       Crea un TO-DO

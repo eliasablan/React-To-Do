@@ -22,11 +22,11 @@ const CreateTodoSlide = ({ onClose }) => {
     <div className="fixed inset-0 overflow-hidden z-50">
       <div className="absolute inset-0 overflow-hidden">
         <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
-          <div className="bg-at flex h-full flex-col overflow-y-scroll py-6 shadow-xl shadow-black">
+          <div className="bg-ic flex h-full flex-col overflow-y-scroll py-6 shadow-xl shadow-black">
             <div>
               <button
                 type="button"
-                className="font-semibold relative rounded-md px-4 text-sc hover:text-pg"
+                className="font-semibold relative rounded-md px-4 text-pg hover:text-sc"
                 onClick={onClose}
               >
                 <span className="absolute -inset-2.5" />
@@ -41,22 +41,24 @@ const CreateTodoSlide = ({ onClose }) => {
               {/* Your content */}
               <form onSubmit={onSubmit}>
                 <label className="block mb-3">
-                  <p>Escribe tu nuevo TO-DO</p>
+                  <p className="text-lg font-semibold text-rs">
+                    Escribe tu nuevo TO-DO:
+                  </p>
                 </label>
                 <textarea
-                  className="bg-rs border-2 border-ic py-2 px-5 rounded-md placeholder:italic placeholder:font-semibold placeholder:text-sc"
-                  placeholder="Cortar cebolla para el almuerzo"
+                  className="bg-ic border-4 border-sc text-rs font-semibold py-2 px-5 rounded-md placeholder:italic placeholder:font-semibold placeholder:text-at"
+                  placeholder="Tengo que..."
                   value={newTodoValue}
                   onChange={onChange}
                 />
                 <div className="text-center justify-end">
                   <button
-                    className="mr-2 border-ic border-2 hover:bg-at font-semibold text-sc mt-5 px-3 py-1 rounded-lg"
+                    className="mr-2 border-sc border-4 p-2 hover:bg-sc font-semibold text-rs mt-5 rounded-lg"
                     onClick={onClose}
                   >
                     Cancelar
                   </button>
-                  <button className="border-ic border-2 hover:bg-at font-semibold text-sc mt-5 px-3 py-1 rounded-lg">
+                  <button className="border-sc border-4 p-2 hover:bg-sc font-semibold text-rs mt-5 rounded-lg">
                     Añadir
                   </button>
                 </div>

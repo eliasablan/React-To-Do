@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types';
 const TodoItem = ({ todo, onComplete, onIncomplete, onRemove }) => {
   return (
     <li>
-      <p className="text-sc hover:bg-at text-xl py-3 my-2">
+      <p className="text-lg text-at font-semibold py-3 my-2 hover:bg-sc">
         <span
           className="cursor-default"
           onClick={todo.finished ? onIncomplete : onComplete}

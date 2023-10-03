@@ -6,7 +6,7 @@ function TodoSearch() {
   return (
     <input
       value={searchValue}
-      className="bg-at border-2 border-ic p-1 pl-2 mb-4 rounded-md placeholder:italic placeholder:font-semibold placeholder:text-sc"
+      className="bg-pg border-4 border-ic p-2 pl-4 mb-4 rounded-md font-semibold placeholder:font-semibold placeholder:text-at"
       placeholder="Filtra TO-DOs"
       onChange={(event) => setSearchValue(event.target.value)}
     />
