@@ -10,7 +10,7 @@ const CreateTodoSlide = ({ onClose }) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    createTodo(event);
+    createTodo(newTodoValue);
     onClose();
   };
 

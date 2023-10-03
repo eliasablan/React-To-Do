@@ -118,10 +118,32 @@ const TodoProvider = ({ children }) => {
     }
   };
 
-  const createTodo = async (event) => {
+  const createTodo = async (newTodo) => {
     try {
-      console.log('submit');
-      console.log(event);
+      setIsLoading(true);
+      const options = {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accesKey}`,
+          Origin: '*',
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ todo: newTodo }),
+      };
+
+      fetch(url, options)
+        .then((response) => {
+          if (response.status !== 201) {
+            setIsLoading(false);
+            throw {
+              status: response.status,
+              message: response.statusText,
+            };
+          }
+          return response.json();
+        })
+        .then(() => getTodos());
     } catch (error) {
       console.log('deleteTodo error', error);
       return error;
