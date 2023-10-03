@@ -1,17 +1,16 @@
-import { useDispatch } from 'react-redux';
-import { toggleModalStatus } from '../appSlice';
+import { PropTypes } from 'prop-types';
 
-function CreateTodoButton() {
-  const dispatch = useDispatch();
-
+const CreateTodoButton = ({ onOpen }) => {
   return (
     <button
       className="bg-ic border-2 border-at hover:bg-at hover:border-ic font-semibold text-sc mt-5 px-3 py-1 rounded-lg"
-      onClick={() => dispatch(toggleModalStatus())}
+      onClick={onOpen}
     >
       Crea un TO-DO
     </button>
   );
-}
-
+};
+CreateTodoButton.propTypes = {
+  onOpen: PropTypes.any,
+};
 export { CreateTodoButton };

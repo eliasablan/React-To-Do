@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import { CreateTodoButton } from '../components/CreateTodoButton';
 import { TodoList } from '../components/TodoList';
@@ -6,8 +6,9 @@ import { TodoItem } from '../components/TodoItem';
 import { TodoSearch } from '../components/TodoSearch';
 import { TodoCounter } from '../components/TodoCounter';
 import { TodosLoading } from '../components/TodosLoading';
-
 import { TodoContext } from '../TodoContext';
+import { CreateTodoSlide } from '../components/CreateTodoSlide';
+import { createPortal } from 'react-dom';
 
 const AppUI = () => {
   const {
@@ -18,6 +19,7 @@ const AppUI = () => {
     uncompleteTodo,
     deleteTodo,
   } = useContext(TodoContext);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     getTodos();
@@ -43,7 +45,15 @@ const AppUI = () => {
             ))}
           </TodoList>
         )}
-        <CreateTodoButton />
+        <CreateTodoButton onOpen={() => setOpenModal(true)} />
+        {openModal &&
+          createPortal(
+            <CreateTodoSlide
+              openModal={openModal}
+              onClose={() => setOpenModal(false)}
+            />,
+            document.body,
+          )}
       </div>
     </div>
   );

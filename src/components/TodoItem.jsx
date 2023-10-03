@@ -1,6 +1,6 @@
 import { PropTypes } from 'prop-types';
 
-function TodoItem({ todo, onComplete, onIncomplete, onRemove }) {
+const TodoItem = ({ todo, onComplete, onIncomplete, onRemove }) => {
   return (
     <li>
       <p className="text-sc hover:bg-at">
@@ -19,7 +19,7 @@ function TodoItem({ todo, onComplete, onIncomplete, onRemove }) {
       </p>
     </li>
   );
-}
+};
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   onComplete: PropTypes.func,

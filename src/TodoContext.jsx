@@ -118,6 +118,16 @@ const TodoProvider = ({ children }) => {
     }
   };
 
+  const createTodo = async (event) => {
+    try {
+      console.log('submit');
+      console.log(event);
+    } catch (error) {
+      console.log('deleteTodo error', error);
+      return error;
+    }
+  };
+
   return (
     <TodoContext.Provider
       value={{
@@ -129,6 +139,7 @@ const TodoProvider = ({ children }) => {
         completedTodos,
         searchValue,
         setSearchValue,
+        createTodo,
         completeTodo,
         uncompleteTodo,
         deleteTodo,
