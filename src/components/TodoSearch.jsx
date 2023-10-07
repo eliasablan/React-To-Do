@@ -5,7 +5,7 @@ const TodoSearch = () => {
   const { isLoading, searchValue, setSearchValue } =
     useContext(TodoContext);
   return (
-    <div className="text-center pb-12">
+    <div className="text-center py-12">
       <input
         value={searchValue}
         disabled={isLoading}

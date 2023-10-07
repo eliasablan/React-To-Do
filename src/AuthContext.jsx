@@ -18,11 +18,12 @@ const AuthProvider = ({ children }) => {
     const tokens = localStorage.getItem('authTokens');
     if (tokens) {
       console.log('tokens useeffect', tokens);
-      const { access, refresh } = JSON.parse(tokens);
+      const { access, refresh, username } = JSON.parse(tokens);
       console.log('accessToken useeffect', access);
       setIsAuthenticated(true);
       setAccessToken(access);
       setRefreshToken(refresh);
+      setUsername(username);
     }
   }, []);
 
@@ -49,7 +50,7 @@ const AuthProvider = ({ children }) => {
       // Guarda los tokens en el localStorage
       localStorage.setItem(
         'authTokens',
-        JSON.stringify({ access, refresh }),
+        JSON.stringify({ access, refresh, username }),
       );
 
       // Actualiza los estados
