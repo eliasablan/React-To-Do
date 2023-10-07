@@ -1,11 +1,14 @@
 import { TodoProvider } from '../TodoContext';
+import { AuthProvider } from '../AuthContext';
 import AppUI from './AppUI';
 
 function App() {
   return (
-    <TodoProvider>
-      <AppUI />
-    </TodoProvider>
+    <AuthProvider>
+      <TodoProvider>
+        <AppUI />
+      </TodoProvider>
+    </AuthProvider>
   );
 }
 
