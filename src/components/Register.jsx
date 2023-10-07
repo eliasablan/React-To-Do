@@ -2,12 +2,12 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 
 const RegisterForm = () => {
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
 
-  const { register } = useContext(AuthContext);
+  const { register, username, setUsername } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,7 +59,9 @@ const RegisterForm = () => {
         />
       </p>
       <p className="py-3">
-        <button>Register</button>
+        <button disabled={!username || !password || !repeatPassword}>
+          Register
+        </button>
       </p>
     </form>
   );

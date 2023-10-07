@@ -34,7 +34,7 @@ const LoginForm = () => {
         />
       </p>
       <p className="py-3">
-        <button>Login</button>
+        <button disabled={!username || !password}>Login</button>
       </p>
     </form>
   );
