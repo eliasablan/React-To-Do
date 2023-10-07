@@ -7,6 +7,7 @@ const users_url = import.meta.env.VITE_USERS_URL;
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const [username, setUsername] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
@@ -80,6 +81,8 @@ const AuthProvider = ({ children }) => {
     if (response.ok) {
       // Muestra un mensaje de exito
       alert('Usuario creado con exito');
+      const { username } = await response.json();
+      setUsername(username);
     } else {
       console.log('error response', response);
       // Muestra un mensaje de error
@@ -121,6 +124,8 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        username,
+        setUsername,
         isAuthenticated,
         isAuthLoading,
         accessToken,
