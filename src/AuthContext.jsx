@@ -10,6 +10,7 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
 
   useEffect(() => {
     // Carga los tokens del localStorage
@@ -23,6 +24,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (username, password) => {
+    setIsAuthLoading(true);
     // Realiza la solicitud POST para generar los tokens de acceso y refresh
     const options = {
       method: 'POST',
@@ -52,9 +54,11 @@ const AuthProvider = ({ children }) => {
       setAccessToken(access);
       setRefreshToken(refresh);
     }
+    setIsAuthLoading(false);
   };
 
   const register = async (username, email, password) => {
+    setIsAuthLoading(true);
     // Realiza la solicitud POST para crear el usuario
     console.log('{ username, email, password }', {
       username,
@@ -76,13 +80,12 @@ const AuthProvider = ({ children }) => {
     if (response.ok) {
       // Muestra un mensaje de exito
       alert('Usuario creado con exito');
-      // Redirecciona a la página principal
-      window.location.href = '/';
     } else {
       console.log('error response', response);
       // Muestra un mensaje de error
       alert('Ocurrió un error al crear el usuario');
     }
+    setIsAuthLoading(false);
   };
 
   const refreshAccessToken = async () => {
@@ -119,6 +122,7 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
+        isAuthLoading,
         accessToken,
         refreshToken,
         login,

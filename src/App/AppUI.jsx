@@ -24,15 +24,19 @@ const AppUI = () => {
     uncompleteTodo,
     deleteTodo,
   } = useContext(TodoContext);
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, isAuthLoading } = useContext(AuthContext);
 
   return (
     <div>
       {!isAuthenticated ? (
-        <div className="grid grid-cols-2">
-          <LoginForm />
-          <RegisterForm />
-        </div>
+        isAuthLoading ? (
+          <TodosLoading className="mt-20" />
+        ) : (
+          <div className="grid grid-cols-2">
+            <LoginForm />
+            <RegisterForm />
+          </div>
+        )
       ) : (
         <div>
           <LogoutButton />
