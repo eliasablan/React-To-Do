@@ -1,63 +1,72 @@
-import { useState, useContext, useEffect } from 'react';
-
-import { CreateTodoButton } from '../components/CreateTodoButton';
-import { TodoList } from '../components/TodoList';
-import { TodoItem } from '../components/TodoItem';
-import { TodoSearch } from '../components/TodoSearch';
-import { TodoCounter } from '../components/TodoCounter';
-import { TodosLoading } from '../components/TodosLoading';
-import { TodoContext } from '../TodoContext';
-import { CreateTodoSlide } from '../components/CreateTodoSlide';
+import { useState, useContext } from 'react';
 import { createPortal } from 'react-dom';
 
+import { LoginForm } from '../components/Login';
+import { RegisterForm } from '../components/Register';
+import { LogoutButton } from '../components/Logout';
+import { TodosLoading } from '../components/TodosLoading';
+import { TodoCounter } from '../components/TodoCounter';
+import { TodoSearch } from '../components/TodoSearch';
+import { TodoList } from '../components/TodoList';
+import { TodoItem } from '../components/TodoItem';
+import { CreateTodoButton } from '../components/CreateTodoButton';
+import { CreateTodoSlide } from '../components/CreateTodoSlide';
+
+import { TodoContext } from '../TodoContext';
+import { AuthContext } from '../AuthContext';
+
 const AppUI = () => {
+  const [openModal, setOpenModal] = useState(false);
   const {
-    getTodos,
     isLoading,
     searchedTodos,
     completeTodo,
     uncompleteTodo,
     deleteTodo,
   } = useContext(TodoContext);
-  const [openModal, setOpenModal] = useState(false);
-
-  useEffect(() => {
-    getTodos();
-  }, []);
+  const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <div className="m-14 text-center">
-      <div className="m-14 text-center">
-        <TodoCounter />
-        <TodoSearch />
-        {isLoading ? (
-          <TodosLoading />
-        ) : (
-          <TodoList>
-            {searchedTodos.map((todo) => (
-              <TodoItem
-                key={todo.id}
-                todo={todo}
-                onComplete={() => completeTodo(todo.id)}
-                onIncomplete={() => uncompleteTodo(todo.id)}
-                onRemove={() => deleteTodo(todo.id)}
-              />
-            ))}
-          </TodoList>
-        )}
-        <CreateTodoButton
-          isLoading={isLoading}
-          onOpen={() => setOpenModal(true)}
-        />
-        {openModal &&
-          createPortal(
-            <CreateTodoSlide
-              openModal={openModal}
-              onClose={() => setOpenModal(false)}
-            />,
-            document.body,
+    <div>
+      {!isAuthenticated ? (
+        <div className="grid grid-cols-2">
+          <LoginForm />
+          <RegisterForm />
+        </div>
+      ) : (
+        <div>
+          <LogoutButton />
+          <TodoCounter />
+          <TodoSearch />
+          {isLoading ? (
+            <TodosLoading />
+          ) : (
+            <TodoList>
+              {searchedTodos.map((todo) => (
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onComplete={() => completeTodo(todo.id)}
+                  onIncomplete={() => uncompleteTodo(todo.id)}
+                  onRemove={() => deleteTodo(todo.id)}
+                />
+              ))}
+            </TodoList>
           )}
-      </div>
+          <CreateTodoButton
+            isLoading={isLoading}
+            onOpen={() => setOpenModal(true)}
+          />
+          {openModal &&
+            createPortal(
+              <CreateTodoSlide
+                openModal={openModal}
+                onClose={() => setOpenModal(false)}
+              />,
+              document.body,
+            )}
+        </div>
+      )}
     </div>
   );
 };
