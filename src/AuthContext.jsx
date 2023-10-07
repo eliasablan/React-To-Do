@@ -17,10 +17,12 @@ const AuthProvider = ({ children }) => {
     // Carga los tokens del localStorage
     const tokens = localStorage.getItem('authTokens');
     if (tokens) {
-      const { accessToken, refreshToken } = JSON.parse(tokens);
+      console.log('tokens useeffect', tokens);
+      const { access, refresh } = JSON.parse(tokens);
+      console.log('accessToken useeffect', access);
       setIsAuthenticated(true);
-      setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
+      setAccessToken(access);
+      setRefreshToken(refresh);
     }
   }, []);
 
