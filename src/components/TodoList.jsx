@@ -1,8 +1,8 @@
 import { PropTypes } from 'prop-types';
 
-function TodoList({ children }) {
-  return <ul>{children}</ul>;
-}
+const TodoList = ({ children }) => {
+  return <ul className="text-center">{children}</ul>;
+};
 
 TodoList.propTypes = {
   children: PropTypes.any,

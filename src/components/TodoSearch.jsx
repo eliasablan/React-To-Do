@@ -1,18 +1,19 @@
 import { useContext } from 'react';
 import { TodoContext } from '../TodoContext';
 
-function TodoSearch() {
+const TodoSearch = () => {
   const { isLoading, searchValue, setSearchValue } =
     useContext(TodoContext);
   return (
-    <input
-      value={searchValue}
-      disabled={isLoading}
-      className="bg-pg border-4 border-ic p-2 pl-4 mb-4 rounded-md font-semibold placeholder:font-semibold placeholder:text-at"
-      placeholder="Filtra TO-DOs"
-      onChange={(event) => setSearchValue(event.target.value)}
-    />
+    <div className="text-center pb-12">
+      <input
+        value={searchValue}
+        disabled={isLoading}
+        placeholder="Busca tu TO-DO"
+        onChange={(event) => setSearchValue(event.target.value)}
+      />
+    </div>
   );
-}
+};
 
 export { TodoSearch };

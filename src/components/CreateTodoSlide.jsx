@@ -19,46 +19,43 @@ const CreateTodoSlide = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 overflow-hidden z-50">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
-          <div className="bg-ic flex h-full flex-col overflow-y-scroll py-6 shadow-xl shadow-black">
-            <div>
+    <div className="fixed z-50">
+      <div className="absolute">
+        <div className="fixed inset-y-0 right-0 flex">
+          <div className="bg-ic flex h-full flex-col overflow-y-scroll py-6 shadow-2xl shadow-black">
+            <div className="relative px-6">
               <button
                 type="button"
-                className="font-semibold relative rounded-md px-4 text-pg hover:text-sc"
+                className="m-0 p-0 border-0 relative text-pg hover:text-sc"
                 onClick={onClose}
               >
-                <span className="absolute -inset-2.5" />
+                <span className="absolute" />
                 <span className="sr-only">Close panel</span>
-                <XMarkIcon
-                  className="inline mb-1 mr-1 h-7 w-7"
-                  aria-hidden="true"
-                />
+                <XMarkIcon className="inline h-7 w-7" aria-hidden="true" />
               </button>
             </div>
-            <div className="text-center relative mt-3 flex-1 px-4 sm:px-6">
+            <div className="relative mt-3 flex-1 px-6">
               {/* Your content */}
               <form onSubmit={onSubmit}>
-                <label className="block mb-3">
-                  <p className="text-lg font-semibold text-rs">
+                <label className="block">
+                  <p className="text-xl font-semibold text-rs">
                     Escribe tu nuevo TO-DO:
                   </p>
                 </label>
                 <textarea
-                  className="bg-ic border-4 border-sc text-rs font-semibold py-2 px-5 rounded-md placeholder:italic placeholder:font-semibold placeholder:text-at"
+                  className="bg-sc text-rs text-lg font-semibold w-full my-7 py-2 px-5 rounded-md placeholder:italic placeholder:font-semibold placeholder:text-at h-32"
                   placeholder="Tengo que..."
                   value={newTodoValue}
                   onChange={onChange}
                 />
-                <div className="text-center justify-end">
+                <div className="text-center">
                   <button
-                    className="mr-2 border-sc border-4 p-2 hover:bg-sc font-semibold text-rs mt-5 rounded-lg"
+                    className="mx-2 text-rs border-sc bg-ic hover:bg-sc"
                     onClick={onClose}
                   >
                     Cancelar
                   </button>
-                  <button className="border-sc border-4 p-2 hover:bg-sc font-semibold text-rs mt-5 rounded-lg">
+                  <button className="mx-2 text-rs border-sc bg-ic hover:bg-sc">
                     Añadir
                   </button>
                 </div>
@@ -70,6 +67,7 @@ const CreateTodoSlide = ({ onClose }) => {
     </div>
   );
 };
+
 CreateTodoSlide.propTypes = {
   onClose: PropTypes.func,
 };
