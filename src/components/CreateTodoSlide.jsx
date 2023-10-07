@@ -34,29 +34,29 @@ const CreateTodoSlide = ({ onClose }) => {
                 <XMarkIcon className="inline h-7 w-7" aria-hidden="true" />
               </button>
             </div>
-            <div className="relative mt-3 flex-1 px-6">
+            <div className="relative mt-8 flex-1 px-6">
               {/* Your content */}
               <form onSubmit={onSubmit}>
                 <label className="block">
-                  <p className="text-xl font-semibold text-rs">
-                    Escribe tu nuevo TO-DO:
+                  <p className="text-2xl font-semibold text-rs">
+                    New Task
                   </p>
                 </label>
                 <textarea
-                  className="bg-sc text-rs text-lg font-semibold w-full my-7 py-2 px-5 rounded-md placeholder:italic placeholder:font-semibold placeholder:text-at h-32"
-                  placeholder="Tengo que..."
+                  className="bg-sc text-rs text-lg font-semibold my-7 py-2 px-5 rounded-md placeholder:italic placeholder:font-semibold placeholder:text-at h-60"
+                  placeholder="Enter your task here..."
                   value={newTodoValue}
                   onChange={onChange}
                 />
-                <div className="text-center">
+                <div className="grid grid-cols-1">
                   <button
-                    className="mx-2 text-rs border-sc bg-ic hover:bg-sc"
+                    className="mb-1 text-rs border-sc bg-ic hover:bg-sc"
                     onClick={onClose}
                   >
-                    Cancelar
+                    Cancel
                   </button>
-                  <button className="mx-2 text-rs border-sc bg-ic hover:bg-sc">
-                    Añadir
+                  <button className="text-rs border-sc bg-ic hover:bg-sc">
+                    Create Task
                   </button>
                 </div>
               </form>

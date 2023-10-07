@@ -17,9 +17,7 @@ const AuthProvider = ({ children }) => {
     // Carga los tokens del localStorage
     const tokens = localStorage.getItem('authTokens');
     if (tokens) {
-      console.log('tokens useeffect', tokens);
       const { access, refresh, username } = JSON.parse(tokens);
-      console.log('accessToken useeffect', access);
       setIsAuthenticated(true);
       setAccessToken(access);
       setRefreshToken(refresh);
@@ -46,8 +44,6 @@ const AuthProvider = ({ children }) => {
     } else {
       // Parsea los tokens de la respuesta
       const { access, refresh } = await response.json();
-      console.log('access Token', access);
-      console.log('refresh Token', refresh);
 
       // Guarda los tokens en el localStorage
       localStorage.setItem(
@@ -66,11 +62,6 @@ const AuthProvider = ({ children }) => {
   const register = async (username, email, password) => {
     setIsAuthLoading(true);
     // Realiza la solicitud POST para crear el usuario
-    console.log('{ username, email, password }', {
-      username,
-      email,
-      password,
-    });
     const options = {
       method: 'POST',
       headers: {

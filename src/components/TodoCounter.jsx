@@ -11,9 +11,10 @@ const TodoCounter = () => {
         style={{ width: '250px' }}
         className="m-auto text-2xl text-at font-semibold text-left"
       >
-        <h1>Hola {username}!</h1>
+        <h1>Welcome, {username}!</h1>
         <h1>
-          Has completado {completedTodos} de {totalTodos} TO-DOs
+          You have {totalTodos} tasks in total. {completedTodos} completed
+          and {totalTodos - completedTodos} pending.
         </h1>
       </div>
     </>

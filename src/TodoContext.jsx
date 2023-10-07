@@ -36,7 +36,6 @@ const TodoProvider = ({ children }) => {
         .then((json) => {
           setTodos(json);
           setIsLoading(false);
-          console.log('getTodos success', todos);
         });
     }
   };

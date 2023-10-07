@@ -27,12 +27,15 @@ const AppUI = () => {
   const { isAuthenticated, isAuthLoading } = useContext(AuthContext);
 
   return (
-    <div>
+    <div className="pb-10">
       {!isAuthenticated ? (
         isAuthLoading ? (
           <TodosLoading className="mt-20" />
         ) : (
           <div className="grid grid-cols-2">
+            <h1 className="col-span-2 mt-14 ml-14 text-4xl font-semibold">
+              Tasks App
+            </h1>
             <LoginForm />
             <RegisterForm />
           </div>
@@ -71,6 +74,13 @@ const AppUI = () => {
             )}
         </div>
       )}
+      <p className="pt-24 px-7 text-center text-at font-semibold text-lg">
+        Developed by{' '}
+        <a className="text-ic" href="https://github.com/eliasablan">
+          Elias Ablan
+        </a>
+        .
+      </p>
     </div>
   );
 };

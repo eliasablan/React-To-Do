@@ -4,7 +4,7 @@ const CreateTodoButton = ({ isLoading, onOpen }) => {
   return (
     <div className="text-center p-6">
       <button disabled={isLoading} onClick={onOpen}>
-        Crea un TO-DO
+        Create New Task
       </button>
     </div>
   );

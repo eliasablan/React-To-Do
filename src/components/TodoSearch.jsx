@@ -9,7 +9,7 @@ const TodoSearch = () => {
       <input
         value={searchValue}
         disabled={isLoading}
-        placeholder="Busca tu TO-DO"
+        placeholder="Filter tasks..."
         onChange={(event) => setSearchValue(event.target.value)}
       />
     </div>
