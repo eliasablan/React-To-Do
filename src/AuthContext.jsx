@@ -41,7 +41,9 @@ const AuthProvider = ({ children }) => {
     const response = await fetch(auth_url, options);
 
     // Verifica el estado de la respuesta
-    if (response.ok) {
+    if (!response.ok) {
+      alert('Credentials Error');
+    } else {
       // Parsea los tokens de la respuesta
       const { access, refresh } = await response.json();
       console.log('access Token', access);
