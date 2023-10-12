@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { createPortal } from 'react-dom';
 
 import { LoginForm } from '../components/Login';
@@ -18,6 +18,8 @@ import { AuthContext } from '../AuthContext';
 const AppUI = () => {
   const [openModal, setOpenModal] = useState(false);
   const {
+    refreshCall,
+    getTodos,
     isLoading,
     searchedTodos,
     completeTodo,
@@ -25,6 +27,18 @@ const AppUI = () => {
     deleteTodo,
   } = useContext(TodoContext);
   const { isAuthenticated, isAuthLoading } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getTodos();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getTodos();
+    }
+  }, [isAuthenticated, refreshCall]);
 
   return (
     <div className="pb-10">

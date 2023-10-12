@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, createContext, useContext } from 'react';
 import { useLocalStorage } from './useLocalStorage';
 import { PropTypes } from 'prop-types';
 
@@ -9,35 +9,33 @@ const todos_url = import.meta.env.VITE_TODOS_URL;
 const TodoContext = createContext();
 
 const TodoProvider = ({ children }) => {
-  const { isAuthenticated, accessToken } = useContext(AuthContext);
+  // Bring JWT Access Token for Headers and method for refreshing the token
+  const { accessToken, refreshAccessToken } = useContext(AuthContext);
+
   const [todos, setTodos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [refreshCall, setRefreshCall] = useState(false);
   const [searchValue, setSearchValue] = useLocalStorage('SEARCH-V1', '');
 
-  useEffect(() => {
-    getTodos();
-  }, []);
+  const getTodos = async () => {
+    setIsLoading(true);
+    const options = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Origin: '*',
+      },
+    };
 
-  useEffect(() => {
-    getTodos();
-  }, [isAuthenticated]);
-
-  const getTodos = () => {
-    if (isAuthenticated) {
-      setIsLoading(true);
-      const options = {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Origin: '*',
-        },
-      };
-      fetch(todos_url, options)
-        .then((response) => response.json())
-        .then((json) => {
-          setTodos(json);
-          setIsLoading(false);
-        });
+    const response = await fetch(todos_url, options);
+    const responseJson = await response.json();
+    if (response.status == 401) {
+      // Refresh ACCESS TOKEN
+      refreshAccessToken();
+      setRefreshCall((prevState) => !prevState);
+    } else {
+      setTodos(responseJson);
     }
+    setIsLoading(false);
   };
 
   const searchedTodos = todos.filter((todo) => {
@@ -119,6 +117,7 @@ const TodoProvider = ({ children }) => {
   return (
     <TodoContext.Provider
       value={{
+        refreshCall,
         getTodos,
         isLoading,
         setIsLoading,

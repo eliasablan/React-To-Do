@@ -7,21 +7,23 @@ const users_url = import.meta.env.VITE_USERS_URL;
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [username, setUsername] = useState('');
+  const [isAuthLoading, setIsAuthLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
   const [accessToken, setAccessToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
-  const [isAuthLoading, setIsAuthLoading] = useState(false);
 
   useEffect(() => {
     // Carga los tokens del localStorage
-    const tokens = localStorage.getItem('authTokens');
-    if (tokens) {
-      const { access, refresh, username } = JSON.parse(tokens);
+    const localAccess = localStorage.getItem('ACCESS_V1');
+    const localRefresh = localStorage.getItem('REFRESH_V1');
+    const localUsername = localStorage.getItem('USERNAME_V1');
+
+    if (localUsername) {
       setIsAuthenticated(true);
-      setAccessToken(access);
-      setRefreshToken(refresh);
-      setUsername(username);
+      setUsername(localUsername);
+      setAccessToken(localAccess);
+      setRefreshToken(localRefresh);
     }
   }, []);
 
@@ -41,20 +43,19 @@ const AuthProvider = ({ children }) => {
     // Verifica el estado de la respuesta
     if (!response.ok) {
       alert('Credentials Error');
+      console.log('login error response', response);
     } else {
       // Parsea los tokens de la respuesta
       const { access, refresh } = await response.json();
 
-      // Guarda los tokens en el localStorage
-      localStorage.setItem(
-        'authTokens',
-        JSON.stringify({ access, refresh, username }),
-      );
-
       // Actualiza los estados
       setIsAuthenticated(true);
+      setUsername(username);
+      localStorage.setItem('USERNAME_V1', username);
       setAccessToken(access);
+      localStorage.setItem('ACCESS_V1', access);
       setRefreshToken(refresh);
+      localStorage.setItem('REFRESH_V1', refresh);
     }
     setIsAuthLoading(false);
   };
@@ -77,44 +78,52 @@ const AuthProvider = ({ children }) => {
     if (response.ok) {
       // Muestra un mensaje de exito
       alert('Usuario creado con exito');
-      const { username } = await response.json();
-      setUsername(username);
     } else {
-      console.log('error response', response);
       // Muestra un mensaje de error
       alert('Ocurrió un error al crear el usuario');
+      console.log('register error response', response);
     }
     setIsAuthLoading(false);
   };
 
   const refreshAccessToken = async () => {
+    setIsAuthLoading(true);
     // Realiza la solicitud POST para refrescar el token de acceso
-    const response = await fetch(auth_url, {
+    const response = await fetch(new URL('refresh/', auth_url), {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Origin: '*',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ refreshToken }),
+      body: JSON.stringify({ refresh: refreshToken }),
     });
 
     // Verifica el estado de la respuesta
-    if (response.status === 200) {
-      // Parsea el nuevo token de acceso de la respuesta
-      const accessToken = await response.json();
-
-      // Actualiza el estado
-      setAccessToken(accessToken);
+    if (response.status == 401) {
+      alert('Refresh tokens expired');
+      logout();
+    } else {
+      const responseJson = await response.json();
+      setAccessToken(responseJson.access);
+      localStorage.setItem('ACCESS_V1', responseJson.access);
     }
+    setIsAuthLoading(false);
   };
 
   const logout = () => {
     // Elimina los tokens del localStorage
-    localStorage.removeItem('authTokens');
-
+    localStorage.removeItem('USERNAME_V1');
+    localStorage.removeItem('ACCESS_V1');
+    localStorage.removeItem('ACCESS_EXPIRATION_V1');
+    localStorage.removeItem('REFRESH_V1');
+    localStorage.removeItem('REFRESH_EXP_V1');
+    
     // Actualiza los estados
     setIsAuthenticated(false);
+    setUsername(null);
     setAccessToken(null);
     setRefreshToken(null);
+    // redirect('/');
   };
 
   return (
