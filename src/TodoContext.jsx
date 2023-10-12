@@ -15,7 +15,7 @@ const TodoProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshCall, setRefreshCall] = useState(false);
-  const [searchValue, setSearchValue] = useLocalStorage('SEARCH-V1', '');
+  const [searchValue, setSearchValue] = useLocalStorage('SEARCH_V1', '');
 
   const getTodos = async () => {
     setIsLoading(true);
