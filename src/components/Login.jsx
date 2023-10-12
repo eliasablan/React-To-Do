@@ -8,7 +8,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login(username, password);
+    login(username.toLowerCase(), password);
   };
 
   return (
