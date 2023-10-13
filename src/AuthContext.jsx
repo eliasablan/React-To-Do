@@ -100,7 +100,7 @@ const AuthProvider = ({ children }) => {
 
     // Verifica el estado de la respuesta
     if (response.status == 401) {
-      alert('Refresh tokens expired');
+      console.log('Refresh tokens expired');
       logout();
     } else {
       const responseJson = await response.json();
@@ -117,7 +117,7 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('ACCESS_EXPIRATION_V1');
     localStorage.removeItem('REFRESH_V1');
     localStorage.removeItem('REFRESH_EXP_V1');
-    
+
     // Actualiza los estados
     setIsAuthenticated(false);
     setUsername(null);
